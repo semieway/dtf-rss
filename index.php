@@ -61,7 +61,7 @@ $channel->title('DTF: Топ пользовательских записей')
 foreach ($articles as $article) {
     $item = new Item();
     $item->title($article['title'])
-        ->description($article['description'] ?? '')
+        ->description($article['description'] ?? sprintf('<a href="%s">%s</a>', $article['url'], 'Link'))
         ->url($article['url'])
         ->enclosure($article['enclosure'] ?? '')
         ->pubDate($article['date'])
