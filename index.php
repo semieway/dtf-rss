@@ -26,6 +26,7 @@ foreach ($data->result as $dataArticle) {
     if ($dataArticle->isEditorial == false && $dataArticle->likes->count >= 100) {
         $article = [];
         $article['url'] = $dataArticle->url;
+        $article['date'] = $dataArticle->date;
 
         if (!empty($dataArticle->title)) {
             $article['title'] = $dataArticle->title;
@@ -44,6 +45,8 @@ foreach ($data->result as $dataArticle) {
         $articles[] = $article;
     }
 }
+
+usort($articles, fn($a, $b) => ($a['date'] > $b['date']) ? -1 : 1);
 
 // Create feed.
 $feed = new Feed();
