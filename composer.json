@@ -8,6 +8,7 @@
     }
   ],
   "require": {
-    "guzzlehttp/guzzle": "^7.2"
+    "guzzlehttp/guzzle": "^7.2",
+    "bhaktaraz/php-rss-generator": "dev-master"
   }
 }
