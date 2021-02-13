@@ -1,0 +1,12 @@
+{
+  "name": "semieway/dtf-rss",
+  "description": "RSS feed with top articles from DTF",
+  "authors": [
+    {
+      "name": "Alex Sirotin",
+      "email": "semieway@gmail.com"
+    }
+  ],
+  "require": {
+  }
+}
