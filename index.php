@@ -55,6 +55,7 @@ $channel = new Channel();
 $channel->title('DTF: Топ пользовательских записей')
     ->description('Пользовательские записи с DTF.ru с рейтингом > 100')
     ->url('https://dtf.ru/all/top/day')
+    ->pubDate(time())
     ->appendTo($feed);
 
 foreach ($articles as $article) {
@@ -63,6 +64,7 @@ foreach ($articles as $article) {
         ->description($article['description'] ?? '')
         ->url($article['url'])
         ->enclosure($article['enclosure'] ?? '')
+        ->pubDate($article['date'])
         ->appendTo($channel);
 }
 
