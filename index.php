@@ -27,6 +27,7 @@ foreach ($data->result as $dataArticle) {
         $article = [];
         $article['url'] = $dataArticle->url;
         $article['date'] = $dataArticle->date;
+        $article['author'] = $dataArticle->author->name
 
         if (!empty($dataArticle->title)) {
             $article['title'] = $dataArticle->title;
@@ -63,6 +64,7 @@ foreach ($articles as $article) {
     $item->title($article['title'])
         ->description($article['description'] ?? sprintf('<a href="%s">%s</a>', $article['url'], 'Link'))
         ->url($article['url'])
+        ->creator($article['author'])
         ->enclosure($article['enclosure'] ?? '')
         ->pubDate($article['date'])
         ->appendTo($channel);
