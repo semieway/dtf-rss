@@ -36,6 +36,7 @@ foreach ($data->result as $dataArticle) {
         $article['dtf_id'] = $dataArticle->id;
         $article['url'] = $dataArticle->url;
         $article['date'] = $dataArticle->date;
+        $article['author'] = $dataArticle->author->name;
 
         if (!empty($dataArticle->title)) {
             $article['title'] = $dataArticle->title;

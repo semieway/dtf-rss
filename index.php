@@ -25,6 +25,7 @@ foreach ($articles as $article) {
     $item->title($article['title'])
         ->description($article['description'] ?? sprintf('<a href="%s">%s</a>', $article['url'], 'Link'))
         ->url($article['url'])
+        ->creator($article['author'])
         ->enclosure($article['enclosure'] ?? '')
         ->pubDate($article['date'])
         ->appendTo($channel);
