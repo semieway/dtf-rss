@@ -5,56 +5,18 @@ require_once 'vendor/autoload.php';
 use Bhaktaraz\RSSGenerator\Channel;
 use Bhaktaraz\RSSGenerator\Feed;
 use Bhaktaraz\RSSGenerator\Item;
-use GuzzleHttp\Client;
 
-$apiToken = getenv('API_TOKEN');
-
-// Fetch articles.
-$client = new Client([
-    'base_uri' => 'https://api.dtf.ru/v1.8/',
-    'headers' => [
-        'X-Device-Token' => $apiToken
-    ]
-]);
-
-$response = $client->request('GET', 'timeline/index/day');
-$data = json_decode($response->getBody());
-$articles = [];
-
-// Prepare articles info.
-foreach ($data->result as $dataArticle) {
-    if ($dataArticle->isEditorial == false && $dataArticle->likes->count >= 100) {
-        $article = [];
-        $article['url'] = $dataArticle->url;
-        $article['date'] = $dataArticle->date;
-
-        if (!empty($dataArticle->title)) {
-            $article['title'] = $dataArticle->title;
-        } else {
-            $article['title'] = 'Запись в подсайте '.$dataArticle->subsite->name;
-        }
-
-        if (!empty($dataArticle->intro)) {
-            $article['description'] = $dataArticle->intro;
-        }
-
-        if (!empty($dataArticle->cover)) {
-            $article['enclosure'] = $dataArticle->cover->thumbnailUrl;
-        }
-
-        $articles[] = $article;
-    }
-}
-
-usort($articles, fn($a, $b) => ($a['date'] > $b['date']) ? -1 : 1);
+$conn = pg_connect(getenv('DATABASE_URL'));
+$query = pg_query($conn, 'SELECT * FROM articles ORDER BY fetched_at DESC');
+$articles = pg_fetch_all($query, PGSQL_ASSOC);
 
 // Create feed.
 $feed = new Feed();
 
 $channel = new Channel();
-$channel->title('DTF: Топ пользовательских записей')
-    ->description('Пользовательские записи с DTF.ru с рейтингом > 100')
-    ->url('https://dtf.ru/all/top/day')
+$channel->title('DTF: Пользовательские записи')
+    ->description('Популярные пользовательские записи с DTF.ru')
+    ->url('https://dtf.ru')
     ->pubDate(time())
     ->appendTo($feed);
 
