@@ -31,4 +31,6 @@ foreach ($articles as $article) {
         ->appendTo($channel);
 }
 
+header('Content-Type: application/rss+xml; charset=utf-8');
+
 echo $feed;
